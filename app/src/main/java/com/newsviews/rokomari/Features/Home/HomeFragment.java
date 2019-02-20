@@ -91,10 +91,12 @@ public class HomeFragment extends Fragment implements iBaseView<NewsModel>, onLi
 
     public void onWebViewOpen(String url) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-        alert.setTitle("Title  ");
+        alert.setTitle("Loading...  ");
 
         WebView wv = new WebView(getActivity());
         wv.loadUrl(url);
+        wv.getSettings().setJavaScriptEnabled(true);
+        wv.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         wv.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -102,7 +104,15 @@ public class HomeFragment extends Fragment implements iBaseView<NewsModel>, onLi
 
                 return true;
             }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                alert.setTitle(view.getTitle() );
+
+            }
         });
+
 
         alert.setView(wv);
         alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {

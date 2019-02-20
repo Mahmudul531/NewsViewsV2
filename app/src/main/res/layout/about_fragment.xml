@@ -3,21 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/textViewLoad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Loading News headlines"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="About Developer"
         android:textColor="@color/black"
-
         android:textSize="25sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/name_md_mahmudul_hassan_n_android_application_developer"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
 
 </LinearLayout>
