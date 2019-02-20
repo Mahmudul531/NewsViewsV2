@@ -69,6 +69,7 @@ public class SearchActivity extends AppCompatActivity implements iSearchView<Str
                 return false;
             }
         });
+
     }
 
     @Override

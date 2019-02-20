@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -32,6 +33,9 @@ public class HomeFragment extends Fragment implements iBaseView<NewsModel>, onLi
 
     @BindView(R.id.textViewLoad)
     TextView textViewLoad;
+
+    @BindView(R.id.pullToRefresh)
+    SwipeRefreshLayout pullToRefresh;
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
@@ -58,10 +62,21 @@ public class HomeFragment extends Fragment implements iBaseView<NewsModel>, onLi
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         HomePresenter homePresenter = new HomePresenter(getActivity(), this);
 
+
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                HomePresenter homePresenter = new HomePresenter(getActivity(), HomeFragment.this);
+
+                pullToRefresh.setRefreshing(true);
+            }
+        });
+
     }
 
     @Override
     public void onDataLoaded(NewsModel ondataLoaded) {
+        pullToRefresh.setRefreshing(false);
 
         NewsViewAdapter newsViewAdapter = new NewsViewAdapter(ondataLoaded.getArticles(), getActivity(), this);
         recyclerView.setAdapter(newsViewAdapter);
@@ -108,7 +123,7 @@ public class HomeFragment extends Fragment implements iBaseView<NewsModel>, onLi
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                alert.setTitle(view.getTitle() );
+                alert.setTitle(view.getTitle());
 
             }
         });
